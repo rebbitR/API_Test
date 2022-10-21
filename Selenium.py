@@ -27,19 +27,12 @@ time.sleep(2)
 card=driver.find_element(By.XPATH,'//*[@id="tbodyid"]')
 items=card.find_elements(By.TAG_NAME,'tr')
 if len(items)==1:
-    print(items)
     item=items[0]
-    print(item)
     properties=item.find_elements(By.TAG_NAME,'td')
-    print(properties)
     name=properties[1]
-    print(name)
-    print(name.text)
     if name.text=='Nexus 6':
         price=properties[2]
-        print(price.text)
         if price.text=='650':
-            print(item.id)
             print('success!!!')
         else:
             print('the price of item !=650')
