@@ -24,7 +24,7 @@ driver.find_element(By.ID,"loginpassword").send_keys(password)
 time.sleep(1)
 # find the 'Log in' button an click on it
 driver.find_element(By.XPATH, '//button[text()="Log in"]').click()
-time.sleep(3)
+time.sleep(5)
 # choose the product Nexus 6
 driver.find_element(By.XPATH, '//*[@id="tbodyid"]/div[3]/div/a/img').click()
 time.sleep(2)
