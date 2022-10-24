@@ -31,17 +31,41 @@ if response_login.status_code==200:
     # the API_URL= https://api.demoblaze.com/viewcart
     cart_json = {"cookie": my_token, "flag": True}
     response_cart=requests.post(url+'viewcart', json=cart_json,verify=False)
-    # I get properties of my cart
-    print(response_cart.text)
-    # extract the list of items from json
-    list_items=response_cart.json()['Items']
-    print(list_items)
-    # print('len= ',len(cart.json()['Items']))
-    # 1. Number of items in the card == 1
-    assert len(list_items)==1
+    # check if the request success:
+    if response_cart.status_code==200:
+        # I get properties of my cart
+        print(response_cart.text)
+        # extract the list of items from json
+        list_items=response_cart.json()['Items']
+        print(list_items)
+        # print('len= ',len(cart.json()['Items']))
+        # 1. Number of items in the card == 1:
+        assert len(list_items)==1
 
-    my1 = {"id": 3}
-    x3 = requests.post(url+'view', json=my1,verify=False)
-    print(x3.json())
-    print('title: ',x3.json()['title'])
-    print('price: ',x3.json()['price'])
+        # extract the item
+        item=list_items.pop()
+        print(item)# {'cookie': 'Renana', 'id': '77065f64-7e07-b43b-7452-d8711345b18b', 'prod_id': 3}
+        # 4. Item’s id == 3:
+        assert item['prod_id']==3
+
+        # post request to view the properties of product that his id=3:
+        # API_URL: https://api.demoblaze.com/view
+        # the json object need num of id product
+        item_json = {"id": 3}
+        response_item = requests.post(url+'view', json=item_json,verify=False)
+        # the properties of product in json:
+        print(response_item.json())
+        # {'cat': 'phone',
+        # 'desc': 'The Motorola Google Nexus 6 is powered by 2.7GHz quad-core Qualcomm Snapdragon 805 processor and it comes with 3GB of RAM.',
+        # 'id': 3,
+        # 'img': 'imgs/Nexus_6.jpg',
+        # 'price': 650.0,
+        # 'title': 'Nexus 6'}
+
+        # 2. The price of the selected phone == 650:
+        assert response_item.json()['price']==650.0
+        # 3. The title of the selected phone == “Nexus 6”:
+        assert response_item.json()['title']=='Nexus 6'
+
+        print('title: ',response_item.json()['title'])
+        print('price: ',response_item.json()['price'])
