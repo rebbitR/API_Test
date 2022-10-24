@@ -59,7 +59,6 @@ if response_login.status_code==200:
         # extract the list of items from json
         list_items=response_cart.json()['Items']
         print(list_items)
-        # print('len= ',len(cart.json()['Items']))
         # 1. Number of items in the card == 1:
         assert len(list_items)==1
 
@@ -78,7 +77,7 @@ if response_login.status_code==200:
         #                 url: API_URL + '/view',
         #                 data: JSON.stringify({ "id": articleItem.prod_id }),
         #                 contentType: "application/json",
-        
+
         # API_URL: https://api.demoblaze.com/view
         # the json object need num of id product
         item_json = {"id": 3}
