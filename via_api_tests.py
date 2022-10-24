@@ -10,6 +10,20 @@ userName='Renana'
 password='12345678'
 
 # Login:
+
+# function logIn() {
+#   var pass = b64EncodeUnicode(document.getElementById("loginpassword").value);
+#   var username = document.getElementById("loginusername").value;
+#   if (pass == "" || username == "") {
+#     alert("Please fill out Username and Password.");
+#   } else {
+#     $.ajax({
+#       type: 'POST',
+#       url: API_URL + '/login',
+#       data: JSON.stringify({ "username": username, "password": pass }),
+#       contentType: "application/json",
+
+
 # post request, we need to send json of username and pass,
 # password- in base 64
 # convert pass to base 64:
@@ -28,6 +42,13 @@ if response_login.status_code==200:
     print('token: ',my_token) #token:  UmVuYW5hMTY2NzIxNQ==
 
     # sign in to the cart- I nead the token for my user cart
+
+    #     if (token.length > 0) {
+    #       $.ajax({
+    #         type: 'POST',
+    #         url: API_URL + '/viewcart',
+    #         data: JSON.stringify({ "cookie": token, "flag": true }),
+
     # the API_URL= https://api.demoblaze.com/viewcart
     cart_json = {"cookie": my_token, "flag": True}
     response_cart=requests.post(url+'viewcart', json=cart_json,verify=False)
@@ -49,6 +70,15 @@ if response_login.status_code==200:
         assert item['prod_id']==3
 
         # post request to view the properties of product that his id=3:
+
+        #           } else {
+        #             data.Items.forEach(function (articleItem) {
+        #               $.ajax({
+        #                 type: 'POST',
+        #                 url: API_URL + '/view',
+        #                 data: JSON.stringify({ "id": articleItem.prod_id }),
+        #                 contentType: "application/json",
+        
         # API_URL: https://api.demoblaze.com/view
         # the json object need num of id product
         item_json = {"id": 3}
