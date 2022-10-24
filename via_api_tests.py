@@ -17,6 +17,7 @@ b = base64.b64encode(bytes(password, 'utf-8')) # bytes
 base64_pass = b.decode('utf-8') # convert bytes to string
 # the post request get a json object:
 login_json = {"username":userName, "password":base64_pass}
+# the API_URL= https://api.demoblaze.com/login
 # post request- login:
 response_login=requests.post(url+'login', json=login_json,verify=False)
 # check if the request success:
@@ -25,12 +26,20 @@ if response_login.status_code==200:
     # extract the token
     my_token=response_login.text[13:-2]
     print('token: ',my_token) #token:  UmVuYW5hMTY2NzIxNQ==
-    
-    my = {"cookie": my_token, "flag": True}
-    cart=requests.post(url+'viewcart', json=my,verify=False)
-    print(cart.text)
-    print(cart.json()['Items'])
-    print('len= ',len(cart.json()['Items']))
+
+    # sign in to the cart- I nead the token for my user cart
+    # the API_URL= https://api.demoblaze.com/viewcart
+    cart_json = {"cookie": my_token, "flag": True}
+    response_cart=requests.post(url+'viewcart', json=cart_json,verify=False)
+    # I get properties of my cart
+    print(response_cart.text)
+    # extract the list of items from json
+    list_items=response_cart.json()['Items']
+    print(list_items)
+    # print('len= ',len(cart.json()['Items']))
+    # 1. Number of items in the card == 1
+    assert len(list_items)==1
+
     my1 = {"id": 3}
     x3 = requests.post(url+'view', json=my1,verify=False)
     print(x3.json())
